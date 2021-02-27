@@ -8,13 +8,17 @@ screen = Screen()
 screen.setup(width=600, height=600)
 screen.tracer(0)
 
-turtle = Turtle(shape='turtle')
-turtle.color('black')
-turtle.penup()
-turtle.setheading(90)
-turtle.goto(0, -280)
+player = Player()
+
+screen.listen()
+screen.onkey(player.move_up, 'Up')
+
 
 game_is_on = True
 while game_is_on:
     time.sleep(0.1)
     screen.update()
+
+    # Detect when player reaches the top of the screen
+    if player.ycor() > 300:
+        player.refresh()

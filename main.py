@@ -1,5 +1,5 @@
 import time
-from turtle import Screen, Turtle
+from turtle import Screen
 from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
@@ -9,6 +9,7 @@ screen.setup(width=600, height=600)
 screen.tracer(0)
 
 player = Player()
+scoreboard = Scoreboard()
 
 car_manager = CarManager()
 
@@ -25,6 +26,13 @@ while game_is_on:
     if player.ycor() > 300:
         player.refresh()
 
+    # Detect car collisions
+    for car in car_manager.car_list:
+        if car.ycor() + 20 > player.ycor() > car.ycor() - 20:
+            if car.xcor() - 20 < player.xcor() < car.xcor() + 20:
+                game_is_on = False
+                scoreboard.game_over()
+
     # Create new car every 6 times the screen is refreshed
     if new_car_count == 6:
         car_manager.new_car()
@@ -37,3 +45,5 @@ while game_is_on:
     car_manager.flush_cars()
 
     new_car_count += 1
+
+screen.exitonclick()

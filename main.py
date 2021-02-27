@@ -15,6 +15,8 @@ car_manager = CarManager()
 
 screen.listen()
 screen.onkey(player.move_up, 'Up')
+screen.onkey(player.move_up, 'w')
+
 
 new_car_count = 0
 game_is_on = True
@@ -25,6 +27,9 @@ while game_is_on:
     # Detect when player reaches the top of the screen
     if player.ycor() > 300:
         player.refresh()
+        scoreboard.level += 1
+        scoreboard.update_score()
+        car_manager.speed_up()
 
     # Detect car collisions
     for car in car_manager.car_list:
